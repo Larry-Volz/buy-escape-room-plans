@@ -1,4 +1,8 @@
-****sections/main-collection-product-grid.liquid****
+{% comment %} ****sections/main-collection-product-grid.liquid**** {% endcomment %}
+
+{% comment %} MY TESTING AREA {% endcomment %}
+
+
 
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
@@ -54,12 +58,64 @@
             {% if section.settings.columns_desktop == 1 %} grid--full-width{% else %}
               grid--{{ section.settings.columns_desktop }}-col-desktop
             {% endif %}">
+
+
+{% comment %} --------   MY CODE MODIFICATIONS 4/9/22---------------------- {% endcomment %}
+  
+            
+            
             {%- for product in collection.products -%}
+            
+            	{% for tag in product.tags %}
+   					 {%- if tag == "plans" -%}
+
+                        {% assign lazy_load = false %}
+                        {%- if forloop.index > 2 -%}
+                          {%- assign lazy_load = true -%}
+                        {%- endif -%}
+
+                        <li class="grid__item">
+                          {% render 'card-product',
+                            card_product: product,
+                            media_aspect_ratio: section.settings.image_ratio,
+                            show_secondary_image: section.settings.show_secondary_image,
+                            show_vendor: section.settings.show_vendor,
+                            show_rating: section.settings.show_rating,
+                            lazy_load: lazy_load
+                          %}
+                   		 </li>
+                      </ul>
+            		{%- endif -%}
+                 {%- endfor -%}
+            {% endfor %}        
+
+            
+            
+			<div style = "display: block;"><br></div>
+            <h2 style="color: white; background-color: green; padding:20px;"> Your Prop Shop for This Escape Room</h2>
+           
+      
+            <ul id="product-grid" data-id="{{ section.id }}" class="
+            grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+            {% if section.settings.columns_desktop == 1 %} grid--full-width{% else %}
+              grid--{{ section.settings.columns_desktop }}-col-desktop
+            {% endif %}">
+            
+            {%- for product in collection.products -%}
+            
+            {% assign tag_counter = 0 %}
+            {% for tag in product.tags %}
+   				{%- if tag == "plans" -%}
+            		{% assign tag_counter = tag_counter | plus: 1 %}
+            	{% endif %}
+            {% endfor %}
+			
               {% assign lazy_load = false %}
               {%- if forloop.index > 2 -%}
                 {%- assign lazy_load = true -%}
               {%- endif -%}
-
+			
+            {% if tag_counter == 0 %}
               <li class="grid__item">
                 {% render 'card-product',
                   card_product: product,
@@ -70,9 +126,15 @@
                   lazy_load: lazy_load
                 %}
               </li>
+            {% endif %}
             {%- endfor -%}
           </ul>
+
   
+{% comment %} ------------------------------------------  {% endcomment %}       
+
+
+
           {%- if paginate.pages > 1 -%}
             {% render 'pagination', paginate: paginate, anchor: '' %}
           {%- endif -%}
