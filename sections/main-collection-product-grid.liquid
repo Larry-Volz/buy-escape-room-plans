@@ -1,4 +1,4 @@
-{% comment %} ****sections/main-collection-product-grid.liquid**** {% endcomment %}
+****sections/main-collection-product-grid.liquid****
 
 {% comment %} MY TESTING AREA {% endcomment %}
 
@@ -50,17 +50,23 @@
           </div>
         </div>
       {%- else -%}
+
+
         <div class="collection page-width">
+
+{% comment %} --------   MY CODE MODIFICATIONS 4/9/22---------------------- {% endcomment %}
+
           <div class="loading-overlay gradient"></div>
+
+      <div id="side-by-side-product" style="display: flex; justify-content: space-around;  ">
   
-          <ul id="product-grid" data-id="{{ section.id }}" class="
+          {% comment %} <ul id="product-grid" data-id="{{ section.id }}" class="
             grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
             {% if section.settings.columns_desktop == 1 %} grid--full-width{% else %}
               grid--{{ section.settings.columns_desktop }}-col-desktop
-            {% endif %}">
+            {% endif %}"> {% endcomment %}
 
 
-{% comment %} --------   MY CODE MODIFICATIONS 4/9/22---------------------- {% endcomment %}
   
             
             
@@ -74,7 +80,11 @@
                           {%- assign lazy_load = true -%}
                         {%- endif -%}
 
-                        <li class="grid__item">
+    <div class="manual-img-rendering">
+      <img src ="{{ product.featured_image |img_url: '500x'}}" style="margin: 20px;">
+    </div>
+
+                        {% comment %} <li class="grid__item">
                           {% render 'card-product',
                             card_product: product,
                             media_aspect_ratio: section.settings.image_ratio,
@@ -84,16 +94,20 @@
                             lazy_load: lazy_load
                           %}
                    		 </li>
-                      </ul>
+                      </ul> {% endcomment %}
+
+                        <div class="plans-description">
+                          <h2>{{ product.title }}</h2>
+                          <p> {{ product.content }}</p>
+                        </div>
             		{%- endif -%}
                  {%- endfor -%}
             {% endfor %}        
 
-            
+      </div>     
             
 			<div style = "display: block;"><br></div>
             <h2 style="color: white; background-color: green; padding:20px;"> Your Prop Shop for This Escape Room</h2>
-           
       
             <ul id="product-grid" data-id="{{ section.id }}" class="
             grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
@@ -105,9 +119,9 @@
             
             {% assign tag_counter = 0 %}
             {% for tag in product.tags %}
-   				{%- if tag == "plans" -%}
-            		{% assign tag_counter = tag_counter | plus: 1 %}
-            	{% endif %}
+              {%- if tag == "plans" -%}
+                {% assign tag_counter = tag_counter | plus: 1 %}
+              {% endif %}
             {% endfor %}
 			
               {% assign lazy_load = false %}
