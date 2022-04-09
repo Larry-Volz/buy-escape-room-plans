@@ -68,7 +68,7 @@
                         {% endif %}"> 
                     {% endcomment %}
 
-
+                    <h1>{{ collection.title }}</h1>
 
                     {%- for product in collection.products -%}
 
@@ -80,8 +80,11 @@
                             {%- if forloop.index > 2 -%}
                                 {%- assign lazy_load = true -%}
                             {%- endif -%}
-
-                            <img src="{{ product.featured_image |img_url: '300x'}}" class="manual-img-rendering" style="object-fit: contain">
+                            <div>
+                              {% for image in product.images %}
+                                <img src="{{ image |img_url: '300x'}}" class="manual-img-rendering" style="object-fit: contain">
+                              {% endfor %}
+                            </div>
 
                             {% comment %}
                             <li class="grid__item">
@@ -98,7 +101,6 @@
                             {% endcomment %} 
                             
                             <div class="plans-description" style="width: 60%;">
-                                <h2>{{ product.title }}</h2>
                                 <p> {{ product.content }}</p>
                             </div>
                         {%- endif -%}
