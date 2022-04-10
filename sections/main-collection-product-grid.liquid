@@ -59,16 +59,9 @@
 
                 <div class="loading-overlay gradient"></div>
 
-                <div id="side-by-side-products" style=" display: flex; justify-content: space-between; flex-wrap: wrap; align-items: flex-start;">
-
-                    {% comment %} <ul id="product-grid" data-id="{{ section.id }}" class="
-                        grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
-                        {% if section.settings.columns_desktop == 1 %} grid--full-width{% else %}
-                            grid--{{ section.settings.columns_desktop }}-col-desktop
-                        {% endif %}"> 
-                    {% endcomment %}
-
                     <h1>{{ collection.title }}</h1>
+
+                <div id="side-by-side-products" style=" display: flex; justify-content: space-between; flex-wrap: wrap; align-items: flex-start;">
 
                     {%- for product in collection.products -%}
 
@@ -80,27 +73,15 @@
                             {%- if forloop.index > 2 -%}
                                 {%- assign lazy_load = true -%}
                             {%- endif -%}
-                            <div>
+
+                            <div style="display: flex; flex-direction: column; align-content: space-around; width: 50%; height: auto;">
                               {% for image in product.images %}
-                                <img src="{{ image |img_url: '300x'}}" class="manual-img-rendering" style="object-fit: contain">
+                                <img src="{{ image |img_url: '300x'}}" class="manual-img-rendering" style="object-fit: contain; margin: 40px 0px;">
                               {% endfor %}
                             </div>
 
-                            {% comment %}
-                            <li class="grid__item">
-                                {% render 'card-product',
-                                    card_product: product,
-                                    media_aspect_ratio: section.settings.image_ratio,
-                                    show_secondary_image: section.settings.show_secondary_image,
-                                    show_vendor: section.settings.show_vendor,
-                                    show_rating: section.settings.show_rating,
-                                    lazy_load: lazy_load
-                                %}
-                            </li>
-                            </ul> 
-                            {% endcomment %} 
                             
-                            <div class="plans-description" style="width: 60%;">
+                            <div class="plans-description" style="width: 50%; padding: 20px;">
                                 <p> {{ product.content }}</p>
                             </div>
                         {%- endif -%}
