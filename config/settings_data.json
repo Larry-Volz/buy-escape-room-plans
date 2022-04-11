@@ -119,7 +119,8 @@
         "type": "header",
         "settings": {
           "color_scheme": "background-1",
-          "logo_width": 90,
+          "logo": "shopify:\/\/shop_images\/logo_key_and_compass_1000x150_71103ef4-5010-44c8-ae19-e8818e8ec345.png",
+          "logo_width": 250,
           "logo_position": "middle-left",
           "menu": "main-menu",
           "show_line_separator": true,
